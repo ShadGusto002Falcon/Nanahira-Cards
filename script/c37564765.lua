@@ -315,7 +315,7 @@ function cm.XyzProcedureCustomCheck(g,xyzc,tp,gf)
 		end
 	end
 	if g:IsExists(cm.XyzProcedureCustomTuneMagicianCheck,1,nil,g) then return false end
-	return true
+	return not gf or gf(g,xyzc,tp)
 end
 function cm.AddXyzProcedureCustom(c,func,gf,minc,maxc,xm,...)
 	local ext_params={...}
