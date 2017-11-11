@@ -448,14 +448,14 @@ return function(e,c)
 	if c==nil then return true end
 	if c:IsType(TYPE_PENDULUM) and c:IsFaceup() then return false end
 	local tp=c:GetControler()
-	local chkf=PLAYER_NONE
+	local chkf=tp
 	local mg=Duel.GetMatchingGroup(cm.SelfFusionProcedureFilter,tp,loc,0,c,c,opf)
 	return c:CheckFusionMaterial(mg,nil,chkf)
 end
 end
 function cm.SelfFusionProcedureOperation(loc,opf)
 return function(e,tp,eg,ep,ev,re,r,rp,c)
-	local chkf=PLAYER_NONE
+	local chkf=tp
 	local mg=Duel.GetMatchingGroup(cm.SelfFusionProcedureFilter,tp,loc,0,c,c,opf)
 	local g=Duel.SelectFusionMaterial(tp,c,mg,nil,chkf)
 	c:SetMaterial(g)
