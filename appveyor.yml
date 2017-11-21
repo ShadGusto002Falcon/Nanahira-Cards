@@ -1,0 +1,108 @@
+version: '{build}'
+
+install:
+  - git submodule update --init --recursive
+
+  # environment and system dependency
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/premake/premake-core/releases/download/v5.0.0-alpha12/premake-5.0.0-alpha12-windows.zip ; exit 0"
+  - 7z x premake-5.0.0-alpha12-windows.zip
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz ; exit 0"
+  - tar xf libevent-2.0.22-stable.tar.gz
+  - move libevent-2.0.22-stable event
+  - xcopy /E event\WIN32-Code event\include
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/freetype/freetype-2.8.tar.bz2 ; exit 0"
+  - tar xf freetype-2.8.tar.bz2
+  - move freetype-2.8 freetype
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://downloads.sourceforge.net/irrlicht/irrlicht-1.8.4.zip ; exit 0"
+  - 7z x irrlicht-1.8.4.zip
+  - md irrlicht
+  - move irrlicht-1.8.4\source\Irrlicht irrlicht\src
+  - move irrlicht-1.8.4\include irrlicht\include
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.lua.org/ftp/lua-5.2.4.tar.gz ; exit 0"
+  - tar xf lua-5.2.4.tar.gz
+  - move lua-5.2.4\src lua
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://www.sqlite.org/2017/sqlite-amalgamation-3200100.zip ; exit 0"
+  - 7z x sqlite-amalgamation-3200100.zip
+  - move sqlite-amalgamation-3200100 sqlite3
+  
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name http://www.ambiera.at/downloads/irrKlang-32bit-1.5.0.zip ; exit 0"
+  - 7z x irrKlang-32bit-1.5.0.zip
+  - move irrKlang-1.5.0 irrklang
+
+  # let premake happy
+  - xcopy /E premake\* .
+  
+  # patch irrlicht
+  - patch -p0 < irrlicht\irrlicht.patch
+  
+  # premake
+  - premake5 vs2015
+  
+configuration: Release
+
+build: 
+    project: build/ygo.sln
+    parallel: true
+
+after_build:
+  - git checkout master
+  - mv -f bin/release/ygopro.exe .
+  - mv -f irrklang\bin\win32-visualStudio\irrKlang.dll .
+  - mv -f irrklang\bin\win32-visualStudio\ikpMP3.dll .
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Smile-DK/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - mv -f ygopro-scripts-master script
+  
+  - rm -rf ygopro-scripts-master.zip
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/Fluorohydride/ygopro-scripts/archive/master.zip ; exit 0"
+  - 7z x ygopro-scripts-master.zip
+  - cp -rf ygopro-scripts-master/*.lua script
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/HuangYuNan/ygopro222-images/archive/master.zip ; exit 0"
+  - 7z x ygopro222-images-master.zip
+  - mv -f ygopro222-images-master pics
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/moecube/ygopro-starter-pack/archive/master.zip ; exit 0"
+  - 7z x ygopro-starter-pack-master.zip
+  - cp -rf ygopro-starter-pack-master/* .
+
+  - bash -c "curl --retry 5 --connect-timeout 30 --location --remote-header-name --remote-name https://github.com/purerosefallen/ygopro-222DIY/archive/data.zip ; exit 0"
+  - 7z x ygopro-222DIY-data.zip
+  - cp -rf ygopro-222DIY-data/sound .
+  - rm -rf sound/custom sound/BGM/custom
+
+  - rm -rf pics/thumbnail pics/*.db
+  - mkdir replay
+
+  - 7z a -mx9 -xr!.git* YGOPro-by-Koishi.7z ygopro.exe LICENSE README.md lflist.conf strings.conf system.conf cards.cdb script textures deck single pics replay sound irrKlang.dll ikpMP3.dll
+
+test: off
+
+deploy:
+  description: 'Automatic build'
+  provider: GitHub
+  auth_token:
+    secure: EQ9miMjfX/QAoBvgc6D+JLmHatLyxOEKZ/uo68QijxWW5Gp4MzB/pOH9+u2GlDVO
+  on:
+    appveyor_repo_tag: true
+
+artifacts:
+  - path: ygopro.exe
+    name: ygopro client
+  - path: YGOPro-by-Koishi.7z
+    name: ygopro full repack
+
+cache:
+  - premake-5.0.0-alpha12-windows.zip
+  - libevent-2.0.22-stable.tar.gz
+  - freetype-2.8.tar.bz2
+  - irrlicht-1.8.4.zip
+  - lua-5.2.4.tar.gz
+  - sqlite-amalgamation-3200100.zip
+  - irrKlang-32bit-1.5.0.zip
