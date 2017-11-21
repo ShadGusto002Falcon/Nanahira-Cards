@@ -21,4 +21,4 @@ build_script:
   - git commit -m "Update Filelist"
   - git push https://%AUTH_TOKEN%@github.com/purerosefallen/ygopro-222DIY master data
   - cd ..
- test: off
+test: off
