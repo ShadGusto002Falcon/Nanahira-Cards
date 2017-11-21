@@ -128,7 +128,7 @@ end
 function cm.CheckGroupRecursive(c,sg,g,f,min,max,ext_params)
 	sg:AddCard(c)
 	local ct=sg:GetCount()
-	local res=(ct>=min and f(sg,table.unpack(ext_params)))
+	local res=(ct>=min and ct<= max and f(sg,table.unpack(ext_params)))
 		or (ct<max and g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params))
 	sg:RemoveCard(c)
 	return res
@@ -141,7 +141,7 @@ function cm.CheckGroup(g,f,cg,min,max,...)
 	local sg=Group.CreateGroup()
 	if cg then sg:Merge(cg) end
 	local ct=sg:GetCount()
-	if ct>=min and ct<max and f(sg,...) then return true end
+	if ct>=min and ct<=max and f(sg,...) then return true end
 	return g:IsExists(cm.CheckGroupRecursive,1,sg,sg,g,f,min,max,ext_params)
 end
 if Group.SelectUnselect then
@@ -155,7 +155,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and and ct<=max and f(sg,...))
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
 			local dmax=math.min(max-cg:GetCount(),g:GetCount())
@@ -183,7 +183,7 @@ if Group.SelectUnselect then
 		local ct=sg:GetCount()
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			local cancel=finish or ct==0
 			local seg=sg:Clone()
 			local dmin=min-cg:GetCount()
@@ -218,7 +218,7 @@ else
 		local ag=g:Filter(cm.CheckGroupRecursive,sg,sg,g,f,min,max,ext_params)	
 		while ct<max and ag:GetCount()>0 do
 			local minc=1
-			local finish=(ct>=min and f(sg,...))
+			local finish=(ct>=min and ct<=max and f(sg,...))
 			if finish then
 				minc=0
 				if cm.master_rule_3_flag and not Duel.SelectYesNo(tp,210) then break end
