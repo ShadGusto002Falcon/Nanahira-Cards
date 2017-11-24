@@ -17,6 +17,7 @@ function cm.initial_effect(c)
 	e0:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
 		local code=c:GetFlagEffectLabel(m)
+		c:ResetFlagEffect(m)
 		Senya.GainEffect_3L(c,code)
 	end)
 	c:RegisterEffect(e0)
@@ -31,13 +32,14 @@ function cm.effect_operation_3L(c)
 	return e1
 end
 function cm.SetMaterial(c,g)
-	local efg=g1:Filter(function(c) return c.effect_operation_3L end,nil)
+	local efg=g:Filter(function(c) return c.effect_operation_3L end,nil)
 	if efg:GetCount()>0 then
 		Duel.Hint(HINT_CARD,0,m)
 		Duel.Hint(HINT_SELECTMSG,tp,m*16)
 		local tg=efg:Select(tp,1,1,nil)
 		local tc=tg:GetFirst()
 		Duel.HintSelection(tg)
-		e:GetHandler():RegisterFlagEffect(m,0xfe1000,0,1,tc:GetOriginalCode())
+		c:RegisterFlagEffect(m,0xfe1000,0,1,tc:GetOriginalCode())
 	end
+	return Card.SetMaterial(c,g)
 end
