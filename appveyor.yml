@@ -10,13 +10,13 @@ build_script:
   - git clone https://github.com/purerosefallen/ygopro-222DIY
   - cd ygopro-222DIY
 
-  - cp -rf ../script expansions
+  - cp -rf ../expansions/script expansions
 
   - git add . -A
   - git commit -m "Auto Push by Nanahira"
 
   - git checkout data
-  - cp -rf ../script expansions
+  - cp -rf ../expansions/script expansions
   - cd update
   - update.exe -ci
   - cd ..
