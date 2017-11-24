@@ -19,8 +19,8 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e3)
 	Senya.NegateEffectModule(c,1,nil,cm.cost)
 end
-function cm.mfilter(c,lc)
-	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL) and c:IsCanBeLinkMaterial(lc)
+function cm.mfilter(c)
+	return c:IsFaceup() and Senya.check_set_sayuri(c) and c:IsLinkType(TYPE_RITUAL)
 end
 function cm.lcheck(g)
 	return not g:IsExists(cm.lfilter,1,nil,g)
