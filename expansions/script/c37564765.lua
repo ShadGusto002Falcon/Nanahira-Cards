@@ -1315,7 +1315,7 @@ function cm.NanahiraTrap(c,...)
 		e1:SetCost(cm.SelfReleaseCost)
 		e1:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 			if e:GetHandler():IsStatus(STATUS_BATTLE_DESTROYED) then return false end
-			return (e:GetHandler():GetSummonType() & 0x553)==0x553
+			return e:GetHandler():IsSummonType(0x553)
 		end)
 		local op=te:GetOperation()
 		e1:SetOperation(function(e,tp,eg,ep,ev,re,r,rp)

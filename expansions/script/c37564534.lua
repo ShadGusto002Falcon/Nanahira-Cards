@@ -38,7 +38,7 @@ function cm.initial_effect(c)
 	c:RegisterEffect(e1)
 end
 function cm.rgcon(e)
-	return (e:GetHandler():GetSummonType() & 0x534)==0x534
+	return e:GetHandler():IsSummonType(0x534)
 end
 function cm.spcon(e,c)
 	if c==nil then return true end
@@ -51,7 +51,7 @@ end
 function cm.rdcon(e,tp,eg,ep,ev,re,r,rp)
 	local c=e:GetHandler()
 	return ep~=tp and Duel.GetAttackTarget()==nil
-		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and (e:GetHandler():GetSummonType() & 0x534)==0x534
+		and c:GetEffectCount(EFFECT_DIRECT_ATTACK)<2 and Duel.GetFieldGroupCount(tp,0,LOCATION_MZONE)>0 and e:GetHandler():IsSummonType(0x534)
 end
 function cm.rdop(e,tp,eg,ep,ev,re,r,rp)
 	Duel.ChangeBattleDamage(ep,ev/2)
