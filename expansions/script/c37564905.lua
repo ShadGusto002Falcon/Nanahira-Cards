@@ -39,7 +39,7 @@ function cm.initial_effect(c)
 			if (re:GetHandler():GetOriginalType() & TYPE_MONSTER)~=0 then
 				e:SetCategory((cat | CATEGORY_SPECIAL_SUMMON))
 			else
-				e:SetCategory((cat & bit.bnot(CATEGORY_SPECIAL_SUMMON)))
+				e:SetCategory((cat & ~CATEGORY_SPECIAL_SUMMON))
 			end
 		end
 	end)
