@@ -25,7 +25,7 @@ function cm.initial_effect(c)
 	e0:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e0:SetCondition(function(e,tp,eg,ep,ev,re,r,rp)
 		local c=e:GetHandler()
-		return bit.band(c:GetSummonType(),0x829)==0x829
+		return (c:GetSummonType() & 0x829)==0x829
 	end)
 	e0:SetOperation(cm.skipop)
 	c:RegisterEffect(e0)
