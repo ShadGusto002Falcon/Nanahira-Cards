@@ -5,6 +5,7 @@ xpcall(function() require("expansions/script/c37564765") end,function() require(
 function cm.initial_effect(c)
 	local ct=Senya.master_rule_3_flag and 3 or 2
 	Senya.AddXyzProcedureRank(c,nil,nil,ct,ct)
+	Senya.AddSummonMusic(c,aux.Stringid(m,4),SUMMON_TYPE_XYZ)
 	Senya.MokouReborn(c,7,m,false,cm.dogcon)
 	local e1=Effect.CreateEffect(c)
 	e1:SetCategory(CATEGORY_ATKCHANGE)
