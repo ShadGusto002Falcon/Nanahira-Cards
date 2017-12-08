@@ -16,7 +16,9 @@ build_script:
   - git commit -m "Auto Push by Nanahira"
 
   - git checkout data
+  - cp -rf ../expansions/pics expansions
   - cp -rf ../expansions/script expansions
+  - cp -rf ../sound .
   - cd update
   - update.exe -ci
   - cd ..
