@@ -45,7 +45,7 @@ build_script:
   - cp -rf ../expansions/script/c37564765.lua expansions/script
   - cp -rf ../expansions/script/c375649??.lua expansions/script
   - cd update
-  - update.exe -ci
+  - ../../ygopro-222DIY/update/update.exe -ci
   - cd ..
   - git add . -A
   - git commit -m "Auto Push by Nanahira"
