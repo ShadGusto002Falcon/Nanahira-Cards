@@ -28,6 +28,27 @@ build_script:
   - git commit -m "Auto Push by Nanahira"
   - git push https://%AUTH_TOKEN%@github.com/purerosefallen/ygopro-222DIY master data
   - cd ..
+  
+  - git clone https://github.com/YGOCC/Terra
+  - cd Terra
+  - cp -rf ../expansions/script/c37564552.lua expansions/script
+  - cp -rf ../expansions/script/c37564765.lua expansions/script
+  - cp -rf ../expansions/script/c375649??.lua expansions/script
+  - git add . -A
+  - git commit -m "Auto Push by Nanahira"
+  - git push https://%AUTH_TOKEN%@github.com/YGOCC/Terra master
+
+  - git clone https://github.com/YGOCC/Moon
+  - cd Moon
+  - cp -rf ../expansions/script/c37564552.lua expansions/script
+  - cp -rf ../expansions/script/c37564765.lua expansions/script
+  - cp -rf ../expansions/script/c375649??.lua expansions/script
+  - cd update
+  - update.exe -ci
+  - cd ..
+  - git add . -A
+  - git commit -m "Auto Push by Nanahira"
+  - git push https://%AUTH_TOKEN%@github.com/YGOCC/Moon master
 
 test: off
 
