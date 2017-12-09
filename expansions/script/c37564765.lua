@@ -1110,7 +1110,7 @@ function cm.PendConditionNanahira()
 					local t=cm.order_table[te:GetValue()]
 					if (t.location==LOCATION_EXTRA and eft>0) or (t.location~=LOCATION_EXTRA and mft>0) then
 						local exg=Duel.GetMatchingGroup(cm.PConditionFilterNanahira,tp,t.location,0,nil,e,tp,lscale,rscale,t.filter,te:GetHandler())
-							g:Merge(exg)
+						g:Merge(exg)
 					end
 				end
 				for i,te in pairs(ext2) do
