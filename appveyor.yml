@@ -37,6 +37,7 @@ build_script:
   - git add . -A
   - git commit -m "Auto Push by Nanahira"
   - git push https://%AUTH_TOKEN%@github.com/YGOCC/Terra master
+  - cd ..
 
   - git clone https://github.com/YGOCC/Moon
   - cd Moon
@@ -49,6 +50,7 @@ build_script:
   - git add . -A
   - git commit -m "Auto Push by Nanahira"
   - git push https://%AUTH_TOKEN%@github.com/YGOCC/Moon master
+  - cd ..
 
 test: off
 
