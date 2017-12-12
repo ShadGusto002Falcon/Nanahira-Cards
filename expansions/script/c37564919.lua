@@ -50,7 +50,7 @@ function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,g,1,0,0)
 end
 function cm.operation(e,tp,eg,ep,ev,re,r,rp)
-	local z=e:GetHandler():GetLinkedZone()
+	local z=e:GetHandler():GetLinkedZone(tp)
 	local tc=Duel.GetFirstTarget()
 	if z~=0 and tc:IsRelateToEffect(e) and tc:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP,tp,z) then
 		Duel.SpecialSummon(tc,0,tp,tp,true,true,POS_FACEUP,z)
