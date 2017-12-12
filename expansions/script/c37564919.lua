@@ -41,7 +41,8 @@ function cm.filter(c,e,tp,z)
 	return c:IsType(TYPE_MONSTER) and c:IsCanBeSpecialSummoned(e,0,tp,true,true,POS_FACEUP,tp,z) and Senya.check_set_sayuri(c) and c:GetLevel()==4
 end
 function cm.target(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	local z=e:GetHandler():GetLinkedZone()
+	local z=e:GetHandler():GetLinkedZone(tp)
+	if z==0 then return false end
 	if chkc then return chkc:IsControler(tp) and chkc:IsLocation(LOCATION_GRAVE) and cm.filter(chkc,e,tp,z) end
 	if chk==0 then return Duel.IsExistingTarget(cm.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp,z) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
